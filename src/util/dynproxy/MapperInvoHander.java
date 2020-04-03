@@ -25,10 +25,10 @@ public class MapperInvoHander implements InvocationHandler {
             System.out.println("### prepareStatement: " + sqlString);
             System.out.print("### Params: " + '\t');
             
-            // set args to pStatement
+            // set Entity args to pStatement
             for (int i = 0; i < paramCount; i++) {
-                // TODO: NOTE may be 90 convert to "B" 
-                pStatement.setObject(i+1, args[i]);                     // set:  void com.mysql.cj.AbstractQueryBindings.setObject(int parameterIndex, Object parameterObj)
+                // TODO: NOTE may be 90 convert to "B"?
+                pStatement.setObject(i+1, args[i]);                                                                          // set:  void com.mysql.cj.AbstractQueryBindings.setObject(int parameterIndex, Object parameterObj)
                 System.out.print(args[i].toString() + "\t | \t");
                 sqlString = sqlString.replaceFirst("\\?", args[i].toString());
             }

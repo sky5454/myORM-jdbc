@@ -1,4 +1,4 @@
-// package mysql;
+// package xxx;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -55,10 +55,8 @@ public class JDBCtest {
                 // System.out.println(i);
 
         } catch (ClassNotFoundException e) {
-            // 数据库驱动类异常处理
             handleErr.printErr(e, "DB Driver Load Failed!", false);
         } catch (SQLException e1) {
-            // 数据库连接失败异常处理
             handleErr.printErr(e1, "DB CONNECT/COMMAND FAILED!  state: " + e1.getSQLState() +'\n'+ "VendorErrCode: "+e1.getErrorCode(), false);
         } catch (YAMLException e2) {
             handleErr.printErr(e2, "LOAD OBJECT FROM YAML FAILED!", false);
@@ -71,7 +69,3 @@ public class JDBCtest {
         }
     }
 }
-
-// ————————————————
-// 版权声明：本文为CSDN博主「杨丹的博客」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-// 原文链接：https://blog.csdn.net/yangdan1025/article/details/80591012
