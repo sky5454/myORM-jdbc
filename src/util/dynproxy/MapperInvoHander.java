@@ -1,5 +1,6 @@
 package util.dynproxy;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -16,6 +17,24 @@ public class MapperInvoHander implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String sqlString = ClassUtil.getValue(method);
+        Object[] values = args.clone();
+
+        // TODO: add handler for Entity
+        if (sqlString.contains("?E")) {
+            Field[] fields = args[0].getClass().getDeclaredFields();
+            int entitySize = fields.length;
+            String parmString = "";
+            values = new Object[entitySize];
+            for (int i = 0; i < entitySize; i++) {
+                parmString = (i == entitySize-1)? parmString.concat("\\?") : parmString.concat("\\?\\, ");
+                boolean accessFlag = fields[i].isAccessible();
+                fields[i].setAccessible(true);
+                values[i] = fields[i].get(args[0]);
+                fields[i].setAccessible(accessFlag);
+            }
+            sqlString = sqlString.replaceAll("\\?E", parmString);
+            System.out.println("Found Entity and has concated!");
+        }
 
         // exec -> sql
         Connection conn = DBConnecter.getConnection();
@@ -28,12 +47,13 @@ public class MapperInvoHander implements InvocationHandler {
             // set Entity args to pStatement
             for (int i = 0; i < paramCount; i++) {
                 // TODO: NOTE may be 90 convert to "B"?
-                pStatement.setObject(i+1, args[i]);                                                                          // set:  void com.mysql.cj.AbstractQueryBindings.setObject(int parameterIndex, Object parameterObj)
-                System.out.print(args[i].toString() + "\t | \t");
-                sqlString = sqlString.replaceFirst("\\?", args[i].toString());
+                pStatement.setObject(i+1, values[i]);                                                                          // set:  void com.mysql.cj.AbstractQueryBindings.setObject(int parameterIndex, Object parameterObj)
+                String valueString = (values[i] == null)? "null" : values[i].toString();
+                System.out.print(valueString + "\t | \t");
+                sqlString = sqlString.replaceFirst("\\?", valueString);
             }
             System.out.println();
-            System.out.println("concatSql: " + sqlString);
+            System.out.println("guessSql: " + sqlString);
             pStatement.execute();
             ResultSet rs = pStatement.getResultSet();
             DBConnecter.printfResult(rs, true); // TODO: conf

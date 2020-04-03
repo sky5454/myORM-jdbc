@@ -10,8 +10,8 @@ import util.dynproxy.SQL;
 // @Mapper
 public interface BaseMapper<E> {
 
-    @SQL("SELECT ID FROM grade where 1=1 or ?=1")
-    int select(E Entity);
+    @SQL("SELECT ?E FROM grade")
+    Grade select(Grade Entity);
 
     @SQL("SELECT * FROM grade where id = ?")
     Grade select(int id);

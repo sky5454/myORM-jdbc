@@ -84,7 +84,7 @@ public class ResultWrapper {
         } else if (returnType == byte[].class) {
 
         } else if (returnType == List[].class) {
-
+            // return rs.getArray(1);
         } else if (returnType == Map[].class) {
 
         } else if (returnType == java.sql.Date.class) {

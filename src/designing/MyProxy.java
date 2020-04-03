@@ -12,6 +12,6 @@ public class MyProxy {
         BaseMapper baseMapper = (BaseMapper)Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class[]{ BaseMapper.class}, invocationHandler);
         Object e = new Object();
         // String r = 
-        baseMapper.select(e);
+        // baseMapper.select(e);
     }
 }

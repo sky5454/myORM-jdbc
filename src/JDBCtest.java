@@ -18,7 +18,7 @@ import util.handleErr;
 import util.dynproxy.MapperInvoHander;
 
 public class JDBCtest {
-    static final String YML_PATH = "./tconf.yml";
+    static final String YML_PATH = "./myFile/tconf.yml";
     public static Connection conn;
 
     public static void main(String[] args) {
@@ -38,18 +38,20 @@ public class JDBCtest {
 
                
                 DBConnecter.printConnInfo(conn);
-                tableQueryTest.test(conn);
+                // tableQueryTest.test(conn);
             
             
 
                 InvocationHandler invocationHandler = new MapperInvoHander();
                 BaseMapper baseMapper = (BaseMapper)Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class[]{ BaseMapper.class}, invocationHandler);
-                Object e = new Object();
+                // Object e = new Object();
+                Grade entity = new Grade();
                 // String r = 
-                // int i = baseMapper.select(e);
+                // int i = baseMapper.select(grade);
+                Grade grade = baseMapper.select(entity);
                 // Grade grade = baseMapper.select(3);
                 // String i = baseMapper.selectNameById(53);
-                List<Grade> grade = baseMapper.select("B", 800);
+                // List<Grade> grade = baseMapper.select("B", 800);
                 // baseMapper.select("C");
                 System.out.print(grade);
                 // System.out.println(i);

@@ -1,6 +1,8 @@
 package tmp;
 
-public class Grade {
+import java.io.Serializable;
+
+public class Grade implements Serializable {
     int id;
     String name;
     int sMath;

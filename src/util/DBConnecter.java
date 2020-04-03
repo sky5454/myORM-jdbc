@@ -101,10 +101,10 @@ public class DBConnecter {
         Field[] fields = clazz.getFields();
         Object entity;
 
-        while (rs != null) {
+        try {
+        if (rs != null) {
             // entity = clazz.getDeclaredConstructor().newInstance(); //JDK9+
             entity = clazz.newInstance();
-            try {
                 for (int i = 1; i <= count; i++) {
                     // if some error happen here, table's column name maybe no fit the format:   (Lowercase letters and underline)
                     // or columnName can't fit with the javabeans
@@ -114,6 +114,7 @@ public class DBConnecter {
                     String fieledName = commonUtil.lineToHump(columnName);
                     Field f = clazz.getDeclaredField(fieledName);
 
+
                     // Upper the first letter
                     String substring = fieledName.substring(0, 1);
                     String UfieldName = fieledName.replaceFirst(substring, substring.toUpperCase());
@@ -121,14 +122,13 @@ public class DBConnecter {
                     // invoke field's setter func
                     Method method = clazz.getMethod("set" + UfieldName, f.getType());
                     method.invoke(entity, rs.getObject(i));
-                    // rsMetaData.getColumnTypeName(i);
                 }
                 return entity;
-            } catch (Exception e) {
-                handleErr.printErr(e, "The javabean may not fit with the Table's columnName", true);
             }
-
+        } catch (Exception e) {
+            handleErr.printErr(e, "The javabean may not fit with the Table's columnName", true);
         }
+        
 
         return new Object();
     }
