@@ -10,8 +10,8 @@ import util.dynproxy.SQL;
 // @Mapper
 public interface BaseMapper<E> {
 
-    @SQL("SELECT ?E FROM grade")
-    Grade select(Grade Entity);
+    // @SQL("SELECT * FROM grade")
+    // Grade select(int Entity); // TODO
 
     @SQL("SELECT * FROM grade where id = ?")
     Grade select(int id);
@@ -19,15 +19,14 @@ public interface BaseMapper<E> {
 
     @SQL("SELECT * FROM grade where name = ? and s_math > ?")
     List<Grade> select(String name, int s_math);
-    // E>
 
 
     
     @SQL("SELECT * FROM grade where name = ?")
     Object select(String name);
 
-    @SQL("INSERT ? INTO grade VALUES (?)")
-    boolean insert(E Entity);
+    @SQL("INSERT INTO grade VALUES (?E)")
+    int insert(Grade Entity);
 
 
     @SQL("SELECT ID FROM grade where name=? and s_math=?")

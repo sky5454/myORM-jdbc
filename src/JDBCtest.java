@@ -48,13 +48,15 @@ public class JDBCtest {
                 Grade entity = new Grade();
                 // String r = 
                 // int i = baseMapper.select(grade);
-                Grade grade = baseMapper.select(entity);
+                // Grade grade = baseMapper.select(entity);
                 // Grade grade = baseMapper.select(3);
                 // String i = baseMapper.selectNameById(53);
                 // List<Grade> grade = baseMapper.select("B", 800);
                 // baseMapper.select("C");
-                System.out.print(grade);
+                // System.out.print(grade);
                 // System.out.println(i);
+                int updateCount = baseMapper.insert(entity);
+                System.out.println(updateCount);
 
         } catch (ClassNotFoundException e) {
             handleErr.printErr(e, "DB Driver Load Failed!", false);

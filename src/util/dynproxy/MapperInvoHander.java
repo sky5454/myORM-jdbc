@@ -54,17 +54,24 @@ public class MapperInvoHander implements InvocationHandler {
             }
             System.out.println();
             System.out.println("guessSql: " + sqlString);
-            pStatement.execute();
-            ResultSet rs = pStatement.getResultSet();
-            DBConnecter.printfResult(rs, true); // TODO: conf
-            rs.beforeFirst();
-            if (rs.next()) {
-                return ResultWrapper.convert(rs, method.getGenericReturnType());
-            } else {
-                return new Object();
+
+
+            if (sqlString.toLowerCase().contains("select")) {       // SELECT
+                pStatement.execute();
+                ResultSet rs = pStatement.getResultSet();
+                DBConnecter.printfResult(rs, true); // TODO: conf
+                rs.beforeFirst();
+                if (rs.next()) {
+                    return ResultWrapper.convert(rs, method.getGenericReturnType());
+                } else {
+                    return new Object();
+                }
+            } else { // update, delete, etc...
+                if (method.getReturnType() == Boolean.class || method.getReturnType() == boolean.class)
+                    return (pStatement.executeUpdate() > 0);
+                else
+                    return pStatement.executeUpdate();
             }
-            // Object returnClass = method.getReturnType();
-        
            
 
 
