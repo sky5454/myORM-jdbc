@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.yu.myorm.core.DBConnecter;
+import org.yu.myorm.core.Exception.NoSuchDataInDBException;
 import org.yu.myorm.core.handleErr;
 
 /**
@@ -28,7 +29,7 @@ import org.yu.myorm.core.handleErr;
 
 public class ResultWrapper {
 
-    public static Object convert(ResultSet rs, Type returnType) throws IllegalAccessException, InstantiationException { // handler
+    public static Object convert(ResultSet rs, Type returnType) throws NoSuchDataInDBException { // handler
         try {
             if (returnType instanceof ParameterizedType) {
                 // 参数化类型 such as Coolection<String>, List<T>
@@ -54,9 +55,7 @@ public class ResultWrapper {
 
         String name = returnType.getTypeName();
         System.out.println("[ERR]: " + name + "hasn't be handled...");
-//        return new Object();
-        return returnType.getClass().newInstance();
-//        throws NullPointerException;
+        throw new NoSuchDataInDBException(returnType);
     }
 
     private static Object convert(ResultSet rs, Class returnType) throws Exception { // 不属于其他四种Type类型
@@ -119,9 +118,9 @@ public class ResultWrapper {
             return DBConnecter.convertEntity(rs, returnType);
         }
 
-        return returnType.getClass().newInstance();
-//        return new Object();
+        throw new NoSuchDataInDBException(returnType);
     }
+
 
     private static Object convert(ResultSet rs, ParameterizedType returnType) throws Exception { // 参数化类型 such as
                                                                                                  // Coolection<String>,
@@ -147,15 +146,17 @@ public class ResultWrapper {
             }
             return dataMap;
         }
-        return new Object();
+
+        throw new NoSuchDataInDBException(returnType);
     }
 
-    private static Object convert(ResultSet rs, TypeVariable returnType) { // 类型变量 T, E
-        return new Object();
+
+    private static Object convert(ResultSet rs, TypeVariable returnType) throws NoSuchDataInDBException { // 类型变量 T, E
+        throw new NoSuchDataInDBException(returnType);
     }
 
-    private static Object convert(ResultSet rs, WildcardType returnType) { // ?, (? extends xx), (? super xx) etc.
-        return new Object();
+    private static Object convert(ResultSet rs, WildcardType returnType) throws NoSuchDataInDBException { // ?, (? extends xx), (? super xx) etc.
+        throw new NoSuchDataInDBException(returnType);
     }
 
     private static Object convert(ResultSet rs, GenericArrayType returnType) throws Exception { // 泛型类数组 如List<?>[],
@@ -175,6 +176,6 @@ public class ResultWrapper {
 
         }
 
-        return new Object();
+        throw new NoSuchDataInDBException(returnType);
     }
 }

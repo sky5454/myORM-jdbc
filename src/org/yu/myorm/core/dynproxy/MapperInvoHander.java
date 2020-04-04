@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.yu.myorm.core.DBConnecter;
+import org.yu.myorm.core.Exception.NoSuchDataInDBException;
 
 
 public class MapperInvoHander implements InvocationHandler {
@@ -29,7 +30,8 @@ public class MapperInvoHander implements InvocationHandler {
                 if (rs.next()) {
                     return ResultWrapper.convert(rs, method.getGenericReturnType());
                 } else {
-                    return method.getReturnType().newInstance();
+//                    return method.getReturnType().newInstance();
+                    throw new NoSuchDataInDBException(sqlString, args);
                 }
             } else { // update, delete, etc...
                 if (method.getReturnType() == Boolean.class || method.getReturnType() == boolean.class)
