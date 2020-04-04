@@ -29,7 +29,7 @@ public class MapperInvoHander implements InvocationHandler {
                 if (rs.next()) {
                     return ResultWrapper.convert(rs, method.getGenericReturnType());
                 } else {
-                    return new Object();
+                    return method.getReturnType().newInstance();
                 }
             } else { // update, delete, etc...
                 if (method.getReturnType() == Boolean.class || method.getReturnType() == boolean.class)

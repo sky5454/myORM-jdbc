@@ -9,7 +9,6 @@
     <version>1.0</version>
 
     <name>myORM</name>
-    <!-- FIXME change it to the project's website -->
     <url>https://github.com/sky5454/myORM-jdbc</url>
 
     <properties>

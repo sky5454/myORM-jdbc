@@ -103,6 +103,7 @@ public class DBConnecter {
 
         try {
         if (rs != null) {
+            // TODO: when clazz is not a JavaBeans but a int, Integer, String,    then how to do ?
             // entity = clazz.getDeclaredConstructor().newInstance(); //JDK9+
             entity = clazz.newInstance();
                 for (int i = 1; i <= count; i++) {

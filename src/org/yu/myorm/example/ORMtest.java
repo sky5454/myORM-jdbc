@@ -54,6 +54,8 @@ public class ORMtest {
                 // baseMapper.select("C");
                 // System.out.print(grade);
                 // System.out.println(i);
+                Grade grade = baseMapper.select(3333);
+                System.out.println("Result :" + grade);
                 int updateCount = baseMapper.insert(entity);
                 System.out.println(updateCount);
 

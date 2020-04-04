@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Grade implements Serializable {
     int id;
-    String name;
+    String name = "";
     int sMath;
 
 

@@ -24,9 +24,11 @@ import org.yu.myorm.core.handleErr;
  * https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/reflect/Type.html
  * see: https://www.cnblogs.com/linghu-java/p/8067886.html
  */
+//TODO: import, 当 select 获得空结果集时，应该返回 -1 或 ""
+
 public class ResultWrapper {
 
-    public static Object convert(ResultSet rs, Type returnType) { // handler
+    public static Object convert(ResultSet rs, Type returnType) throws IllegalAccessException, InstantiationException { // handler
         try {
             if (returnType instanceof ParameterizedType) {
                 // 参数化类型 such as Coolection<String>, List<T>
@@ -52,7 +54,9 @@ public class ResultWrapper {
 
         String name = returnType.getTypeName();
         System.out.println("[ERR]: " + name + "hasn't be handled...");
-        return new Object();
+//        return new Object();
+        return returnType.getClass().newInstance();
+//        throws NullPointerException;
     }
 
     private static Object convert(ResultSet rs, Class returnType) throws Exception { // 不属于其他四种Type类型
@@ -115,7 +119,8 @@ public class ResultWrapper {
             return DBConnecter.convertEntity(rs, returnType);
         }
 
-        return new Object();
+        return returnType.getClass().newInstance();
+//        return new Object();
     }
 
     private static Object convert(ResultSet rs, ParameterizedType returnType) throws Exception { // 参数化类型 such as
