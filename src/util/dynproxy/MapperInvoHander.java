@@ -21,7 +21,7 @@ public class MapperInvoHander implements InvocationHandler {
             pStatement = pStatementHelper.parseParamer(sqlString, args, method);
         }
 
-            if (sqlString.toLowerCase().contains("select")) {       // SELECT
+            if (sqlString.toLowerCase().startsWith("select")) {       // SELECT
                 pStatement.execute();
                 ResultSet rs = pStatement.getResultSet();
                 DBConnecter.printfResult(rs, true); // TODO: conf

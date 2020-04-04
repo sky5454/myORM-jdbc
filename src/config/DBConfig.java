@@ -58,7 +58,7 @@ public class DBConfig {
     // private String version;
     private String address;
     private String port;
-    private String table;
+    private String database;
     private String user;
     private String passwd;
 
@@ -69,7 +69,7 @@ public class DBConfig {
      */
     public void init() {
         // invoke this after this bean is ok;
-        if (address == null || port == null || table == null || type == null)
+        if (address == null || port == null || database == null || type == null)
             return; 
 
         // assign it when null
@@ -82,11 +82,11 @@ public class DBConfig {
         if (null == this.url) {
         switch (this.type.toLowerCase()) {
             case "mysql":
-                this.url = "jdbc:mysql://" + address + ":" + port + "/" + table + "?"
+                this.url = "jdbc:mysql://" + address + ":" + port + "/" + database + "?"
                         + "useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
                 break;
             case "sqlserver":
-                this.url = "jdbc:sqlserver://" + address + ":" + port + ";DatabaseName=" + table;
+                this.url = "jdbc:sqlserver://" + address + ":" + port + ";DatabaseName=" + database;
                 break;
             // case "sqlite": 
             default:
@@ -136,12 +136,12 @@ public class DBConfig {
         this.port = port;
     }
 
-    public String getTable() {
-        return table;
+    public String getDatabase() {
+        return database;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
     public String getUser() {
@@ -165,6 +165,6 @@ public class DBConfig {
     @Override
     public String toString() {
         return "DBConfig [address=" + address + ", driver=" + driver + ", passwd=" + passwd + ", port=" + port
-                + ", table=" + table + ", type=" + type + ", url=" + url + ", user=" + user + "]";
+                + ", database=" + database + ", type=" + type + ", url=" + url + ", user=" + user + "]";
     }
 }

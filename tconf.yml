@@ -4,7 +4,7 @@ DB:
   # version: 8.0
   address: 127.0.0.1
   port: 3306 #default mysql 3306
-  table: test
+  database: test
   # driver: io
   # url: jdbc:mysql://${mysql.address:localhost}:{mysql.port:3306}/{mysql.table}&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
   # url: 
