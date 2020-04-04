@@ -60,7 +60,7 @@ public class ORMtest {
             System.out.println(updateCount);
 
         } catch (NoSuchDataInDBException dbe) {
-            handleErr.printErr(dbe, dbe.getMessage(), false);
+            handleErr.printErr(dbe, "No Such Data In DB!", false);
         } catch (ClassNotFoundException e) {
             handleErr.printErr(e, "DB Driver Load Failed!", false);
         } catch (SQLException e1) {

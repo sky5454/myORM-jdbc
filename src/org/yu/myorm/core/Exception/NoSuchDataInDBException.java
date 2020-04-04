@@ -16,7 +16,7 @@ public class NoSuchDataInDBException extends UndeclaredThrowableException {
     }
 
     public NoSuchDataInDBException(String s, Object[] args) {
-        this("(problemSQL)" + s);
+        this("(problemSQL) " + s);
         DBfield = args;
     }
 

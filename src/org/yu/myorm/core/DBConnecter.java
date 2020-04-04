@@ -42,6 +42,7 @@ public class DBConnecter {
 
     public static void close(final Connection conn) {
         System.out.println("\nClosing DB Connection...");
+        if (conn == null) return;
         try {
             conn.close();
             System.out.println("Closed DB Connection!");
@@ -92,7 +93,7 @@ public class DBConnecter {
         }
     }
 
-    public static <E> Object convertEntity(final ResultSet rs, Class clazz) throws SQLException, Exception {
+    public static <E> Object convertEntity(final ResultSet rs, Class clazz) throws Exception {
         if (rs == null)
             return new Object();
         // TODO: 在多行rs时可优化
@@ -102,30 +103,28 @@ public class DBConnecter {
         Object entity;
 
         try {
-        if (rs != null) {
             // TODO: when clazz is not a JavaBeans but a int, Integer, String,    then how to do ?
             // entity = clazz.getDeclaredConstructor().newInstance(); //JDK9+
             entity = clazz.newInstance();
-                for (int i = 1; i <= count; i++) {
-                    // if some error happen here, table's column name maybe no fit the format:   (Lowercase letters and underline)
-                    // or columnName can't fit with the javabeans
-                    String columnName = rsMetaData.getColumnName(i);
+            for (int i = 1; i <= count; i++) {
+                // if some error happen here, table's column name maybe no fit the format:   (Lowercase letters and underline)
+                // or columnName can't fit with the javabeans
+                String columnName = rsMetaData.getColumnName(i);
 
-                    // (db)stu_name_code -> (javaField)stuNameCode    
-                    String fieledName = commonUtil.lineToHump(columnName);
-                    Field f = clazz.getDeclaredField(fieledName);
+                // (db)stu_name_code -> (javaField)stuNameCode
+                String fieledName = commonUtil.lineToHump(columnName);
+                Field f = clazz.getDeclaredField(fieledName);
 
 
-                    // Upper the first letter
-                    String substring = fieledName.substring(0, 1);
-                    String UfieldName = fieledName.replaceFirst(substring, substring.toUpperCase());
+                // Upper the first letter
+                String substring = fieledName.substring(0, 1);
+                String UfieldName = fieledName.replaceFirst(substring, substring.toUpperCase());
 
-                    // invoke field's setter func
-                    Method method = clazz.getMethod("set" + UfieldName, f.getType());
-                    method.invoke(entity, rs.getObject(i));
-                }
-                return entity;
+                // invoke field's setter func
+                Method method = clazz.getMethod("set" + UfieldName, f.getType());
+                method.invoke(entity, rs.getObject(i));
             }
+            return entity;
         } catch (Exception e) {
             handleErr.printErr(e, "The javabean may not fit with the Table's columnName", true);
         }
