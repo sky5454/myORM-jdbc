@@ -35,17 +35,19 @@ public class pStatementHelper {
             int paramCount = pStatement.getParameterMetaData().getParameterCount();
             System.out.println("### prepareStatement: " + sqlString);
             System.out.print("### Params: " + '\t');
-            
+
+
             // set Entity args to pStatement
+            String guessSQL = sqlString;
             for (int i = 0; i < paramCount; i++) {
                 // TODO: NOTE may be 90 convert to "B"?
                 pStatement.setObject(i+1, values[i]);                                                                          // set:  void com.mysql.cj.AbstractQueryBindings.setObject(int parameterIndex, Object parameterObj)
                 String valueString = (values[i] == null)? "null" : values[i].toString();
                 System.out.print(valueString + "\t | \t");
-                sqlString = sqlString.replaceFirst("\\?", valueString);
+                guessSQL = guessSQL.replaceFirst("\\?", valueString);
             }
             System.out.println();
-            System.out.println("guessSql: " + sqlString);
+            System.out.println("guessSql: " + guessSQL);
             return pStatement;
         } catch (SQLException e) {
                 handleErr.printErr(e, method, sqlString, "SQLException", false);

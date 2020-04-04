@@ -10,6 +10,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 import org.yu.myorm.config.DBConfig;
 import org.yu.myorm.config.YMLConfig;
 import org.yu.myorm.core.DBConnecter;
+import org.yu.myorm.core.Exception.NoSuchDataInDBException;
 import org.yu.myorm.core.handleErr;
 import org.yu.myorm.core.dynproxy.MapperInvoHander;
 import org.yu.myorm.example.mapper.Grade;
@@ -35,30 +36,31 @@ public class ORMtest {
             if (!conn.isClosed())
                 System.out.println("数据库连接成功！");
 
-               
-                DBConnecter.printConnInfo(conn);
-                // tableQueryTest.test(conn);
-            
-            
 
-                InvocationHandler invocationHandler = new MapperInvoHander();
-                BaseMapper baseMapper = (BaseMapper)Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class[]{ BaseMapper.class}, invocationHandler);
-                // Object e = new Object();
-                Grade entity = new Grade();
-                // String r = 
-                // int i = baseMapper.select(grade);
-                // Grade grade = baseMapper.select(entity);
-                // Grade grade = baseMapper.select(3);
-                // String i = baseMapper.selectNameById(53);
-                // List<Grade> grade = baseMapper.select("B", 800);
-                // baseMapper.select("C");
-                // System.out.print(grade);
-                // System.out.println(i);
-                Grade grade = baseMapper.select(3333);
-                System.out.println("Result :" + grade);
-                int updateCount = baseMapper.insert(entity);
-                System.out.println(updateCount);
+            DBConnecter.printConnInfo(conn);
+            // tableQueryTest.test(conn);
 
+
+            InvocationHandler invocationHandler = new MapperInvoHander();
+            BaseMapper baseMapper = (BaseMapper) Proxy.newProxyInstance(BaseMapper.class.getClassLoader(), new Class[]{BaseMapper.class}, invocationHandler);
+            // Object e = new Object();
+            Grade entity = new Grade();
+            // String r =
+            // int i = baseMapper.select(grade);
+            // Grade grade = baseMapper.select(entity);
+            // Grade grade = baseMapper.select(3);
+            // String i = baseMapper.selectNameById(53);
+            // List<Grade> grade = baseMapper.select("B", 800);
+            // baseMapper.select("C");
+            // System.out.print(grade);
+            // System.out.println(i);
+            Grade grade = baseMapper.select(3333);
+            System.out.println("Result :" + grade);
+            int updateCount = baseMapper.insert(entity);
+            System.out.println(updateCount);
+
+        } catch (NoSuchDataInDBException dbe) {
+            handleErr.printErr(dbe, dbe.getMessage(), false);
         } catch (ClassNotFoundException e) {
             handleErr.printErr(e, "DB Driver Load Failed!", false);
         } catch (SQLException e1) {
@@ -67,6 +69,7 @@ public class ORMtest {
             handleErr.printErr(e2, "LOAD OBJECT FROM YAML FAILED!", false);
         } catch (Exception e3) {
             handleErr.printErr(e3, "EXCEPTION!!!", true);
+
         } finally {
             // try-with-resources
             DBConnecter.close(conn);
