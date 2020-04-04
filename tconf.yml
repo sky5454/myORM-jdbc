@@ -1,4 +1,4 @@
-# --- !!config.DB
+# --- !!org.yu.myorm.config.DB
 DB:
   type: mysql
   # version: 8.0
