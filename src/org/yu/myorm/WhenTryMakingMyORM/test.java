@@ -23,7 +23,7 @@ public class test {
            
        
         
-        // TODO : 仿照MybatisPlus
+        // 仿照MybatisPlus
         try {
             k1 = System.currentTimeMillis();
             method = BaseMapper.class.getMethod("select", Object.class);

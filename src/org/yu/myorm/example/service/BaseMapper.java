@@ -9,9 +9,6 @@ import org.yu.myorm.example.mapper.Grade;
 // @Mapper
 public interface BaseMapper<E> {
 
-    // @SQL("SELECT * FROM grade")
-    // Grade select(int Entity); // TODO
-
     @SQL("SELECT * FROM grade where id = ?")
     Grade select(int id);
 
