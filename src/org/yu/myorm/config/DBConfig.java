@@ -35,6 +35,7 @@ enum DBDriverEnum {
 // TODO: javaBeans need syn?
 public class DBConfig {
     // MYSQL_PORT 3306 SQLSERVE_ENT_PORT 1433
+    public static final String TIME_ZONE = "Asia/Shanghai";
     public static final String MYSQL = "com.mysql.cj.jdbc.Driver";
     public static final String SQLSERVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     // public static final String SQLSERVER2000 = "com.microsoft.jdbc.sqlserver.SQLServerDriver";
@@ -47,9 +48,6 @@ public class DBConfig {
     // DBDriver.put("MYSQL", MYSQL);
     // }
     // };
-
-    // 获取mysql连接地址
-    // "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     private String url;
     private String driver;
@@ -83,7 +81,7 @@ public class DBConfig {
         switch (this.type.toLowerCase()) {
             case "mysql":
                 this.url = "jdbc:mysql://" + address + ":" + port + "/" + database + "?"
-                        + "useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+                        + "useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=" + TIME_ZONE;
                 break;
             case "sqlserver":
                 this.url = "jdbc:sqlserver://" + address + ":" + port + ";DatabaseName=" + database;
