@@ -25,6 +25,7 @@ public class MapperInvoHander implements InvocationHandler {
                 pStatement = pStatementHelper.parseParamer(sqlString, args, method);
             }
 
+            System.out.println("realSQL: " + pStatement); // MySQL supported, such as com.mysql.cj.jdbc.ClientPreparedStatement: SELECT * FROM grade where id = 3333
             if (sqlString.toLowerCase().startsWith("select")) {       // SELECT
                 pStatement.execute();
                 ResultSet rs = pStatement.getResultSet();
