@@ -1,5 +1,6 @@
 package org.yu.myorm.example;// package xxx;
 
+import java.io.File;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
@@ -18,7 +19,8 @@ import org.yu.myorm.example.service.BaseMapper;
 
 public class ORMtest {
 //    static final String YML_PATH = "./myFile/tconf.yml";
-    static final String YML_PATH = "./tconf.yml";
+      static final String YML_PATH = "./src/main/resources/myconf.yml";
+//    static final String YML_PATH = "./tconf.yml";
     public static Connection conn;
 
     public static void main(String[] args) {
@@ -29,9 +31,10 @@ public class ORMtest {
         DBConfig dbconf;
         // 获取连接的一个状态
         try {
-            new DBConfig().setUrl("fg");
+            System.out.println("YML_FILE_PATH: " + new File(YML_PATH).getCanonicalPath());
             ymlConfig = YMLConfig.loadDataFromYML(YML_PATH);
             dbconf = ymlConfig.getDB();
+            // dbconf.setUrl("your can set url here, or set in the yml, or automatic set by Class YMLConfig");
             conn = DBConnecter.getConnection(dbconf);
             if (!conn.isClosed())
                 System.out.println("数据库连接成功！");
