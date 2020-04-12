@@ -22,7 +22,7 @@ public class ClassUtil {
 
     
         if (method.isAnnotationPresent(SQL.class)) {    // need optimize?
-            SQL anno = (SQL)method.getAnnotation(SQL.class);
+            SQL anno = method.getAnnotation(SQL.class);
             System.out.println("[METHOD]: " + method.toGenericString());
             System.out.println("[Anno.value]: " + anno.value());
             // METHOD_CACHE.toString();
