@@ -14,6 +14,7 @@ public class MapperInvoHander implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
+        //long startTime = System.currentTimeMillis();
         PreparedStatement pStatement = null;
         try {
 
@@ -48,6 +49,7 @@ public class MapperInvoHander implements InvocationHandler {
         } catch (NoSuchDataInDBException e) {
             throw e;
         } finally {
+            //System.out.println("TIME: " + (System.currentTimeMillis()-startTime));
             if (null != pStatement)
                 pStatement.close();
         }
