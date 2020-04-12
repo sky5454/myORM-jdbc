@@ -68,23 +68,24 @@ public class DBConnecter {
         return statement;
     }
 
-    public static void printfResult(final ResultSet rs, boolean isPrintLog) throws SQLException {
+    public static void printfResult(final ResultSet rs, boolean isPrintData) throws SQLException {
         final ResultSetMetaData rsMetaData = rs.getMetaData();
         final int count = rsMetaData.getColumnCount();
         System.out.println("=====================" + rsMetaData.getTableName(1) + "============================");
-        // 打印table 第一行
+        // PRINT table's Column
         for (int i = 1; i <= count; i++) {
             System.out.print(rsMetaData.getColumnName(i) + "\t|\t");
         }
         System.out.println();
 
-        // 打印每列类型
+        // PRINT the type of table's Column
         for (int i = 1; i <= count; i++) {
             System.out.print('[' + rsMetaData.getColumnTypeName(i) + "]\t=\t");
         }
         System.out.println();
 
-        // 打印table数据
+        if (!isPrintData) return;
+        // PRINT table's data
         while (rs.next()) {
             for (int i = 1; i <= count; i++) {
                 System.out.print(rs.getObject(i) + "\t|\t");
