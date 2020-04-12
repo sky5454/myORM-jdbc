@@ -26,6 +26,6 @@ jobs:
         with:
           java-version: 11
       - name: Publish package
-        run: mvn -B deploy
+        run: mvn -B clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_MYORM }}
