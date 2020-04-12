@@ -28,6 +28,6 @@ jobs:
     - name: Publish package
       run: mvn -B deploy
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_ACTIONS }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_MYORM }}
 
 
