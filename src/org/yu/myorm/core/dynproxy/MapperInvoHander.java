@@ -13,11 +13,11 @@ public class MapperInvoHander implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+        PreparedStatement pStatement = null;
         try {
 
-
             String sqlString = ClassUtil.getValue(method);
-            PreparedStatement pStatement;
             if (args == null) {
                 pStatement = DBConnecter.getConnection().prepareStatement(sqlString);
             } else {
@@ -47,6 +47,9 @@ public class MapperInvoHander implements InvocationHandler {
             // System.out.println(" -[ReturnTYPE]: " + method.getGenericReturnType().getTypeName());        // int, java.lang.String  etc..
         } catch (NoSuchDataInDBException e) {
             throw e;
+        } finally {
+            if (null != pStatement)
+                pStatement.close();
         }
     }
     
