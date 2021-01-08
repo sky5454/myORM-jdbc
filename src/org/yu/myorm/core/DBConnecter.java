@@ -31,7 +31,7 @@ public class DBConnecter {
     }
 
     public static Connection getConnection(final DBConfig dbconf) throws SQLException, ClassNotFoundException {
-        if (conn != null)
+        if (conn != null  && !conn.isClosed())
             return conn;
         Class.forName(dbconf.getDriver());
         // getConnection()方法，连接MySQL数据库！
