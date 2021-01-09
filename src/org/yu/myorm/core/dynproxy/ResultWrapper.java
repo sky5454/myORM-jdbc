@@ -82,7 +82,7 @@ public class ResultWrapper {
             return rs; // without testing
 
         } else if (returnType == java.math.BigDecimal.class) {
-
+            return rs.getBigDecimal(1);
         } else if (returnType == byte[].class) {
 
         } else if (returnType == List[].class) {
@@ -104,7 +104,7 @@ public class ResultWrapper {
         } else if (returnType == java.util.Date.class) {
 
         } else if (returnType == java.math.BigInteger.class) {
-
+            return rs.getLong(1);
         } else if (returnType == LocalDate.class) {
 
         } else if (returnType == LocalDateTime.class) {
