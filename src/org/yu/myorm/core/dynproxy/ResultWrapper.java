@@ -104,7 +104,7 @@ public class ResultWrapper {
         } else if (returnType == java.util.Date.class) {
 
         } else if (returnType == java.math.BigInteger.class) {
-            return rs.getLong(1);
+            return BigInteger.valueOf(rs.getLong(1));
         } else if (returnType == LocalDate.class) {
 
         } else if (returnType == LocalDateTime.class) {
